@@ -1,10 +1,11 @@
 "use client"
 import { axiosPublic } from '@/app/utils/axiosPublice';
 import Link from 'next/link';
+import {  useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const Login = () => {
-
+    const router =useRouter()
     const [loginInfo, setLoginInfo] = useState({
         email: "",
         password: ""
@@ -19,11 +20,13 @@ const Login = () => {
         
     } 
 
-    const handleSubmit=(e)=>{
+    const handleSubmit= async (e)=>{
         e.preventDefault()
         try {
-            const response=axiosPublic.post('/api/auth/login',loginInfo)
-            console.log(response)
+            const response=await axiosPublic.post('/api/auth/login',{email:loginInfo.email,password:loginInfo.password})
+            if(response.data.login && response.data.role){
+                router.push('/admin-dashboard')
+            }
         } catch (error) {
             console.log(error)
         }
