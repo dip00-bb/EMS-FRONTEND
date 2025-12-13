@@ -26,6 +26,8 @@ const Login = () => {
             const response=await axiosPublic.post('/api/auth/login',{email:loginInfo.email,password:loginInfo.password})
             if(response.data.login && response.data.role){
                 router.push('/admin-dashboard')
+            }else{
+                router.push('/employee-dashboard')
             }
         } catch (error) {
             console.log(error)
