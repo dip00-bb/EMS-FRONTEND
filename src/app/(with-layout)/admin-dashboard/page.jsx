@@ -5,11 +5,10 @@ import { axiosPrivate } from '@/app/utils/axiosPrivate';
 import React, { useEffect } from 'react';
 
 const AdminDashboard = () => {
-    const { user } = useAuth()
-
-    useEffect(() => {
-        const response = axiosPrivate.get('/api/auth/verify')
-    }, [])
+    const { user,isLoading } = useAuth()
+    if(isLoading) {
+        return <div>Loading...</div>
+    }
     console.log(user)
     return (
         <div>

@@ -8,6 +8,7 @@ import { axiosPrivate } from '../utils/axiosPrivate';
 const AuthProvider = ({ children }) => {
 
     const [user, setUser] = useState(null)
+    const [isLoading,setIsLoading]=useState(true)
 
     const login = (user) => {
         setUser(user)
@@ -21,8 +22,8 @@ const AuthProvider = ({ children }) => {
 
         const verifyUser = async () => {
             const response = await axiosPrivate.post('/api/auth/verify')
-
-            console.log(response)
+            setUser(response?.data?.user)
+            setIsLoading(false)
         }
 
         verifyUser()
@@ -32,7 +33,8 @@ const AuthProvider = ({ children }) => {
     const authInfo = {
         user,
         login,
-        logout
+        logout,
+        isLoading
     }
     return (
         <AuthContext.Provider value={authInfo}>
