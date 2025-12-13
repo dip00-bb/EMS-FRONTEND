@@ -1,5 +1,6 @@
 "use client"
 import useAuth from '@/app/Hooks/useAuth';
+import { axiosPrivate } from '@/app/utils/axiosPrivate';
 import { axiosPublic } from '@/app/utils/axiosPublice';
 import Link from 'next/link';
 import {  useRouter } from 'next/navigation';
@@ -29,7 +30,7 @@ const Login = () => {
             const response=await axiosPublic.post('/api/auth/login',{email:loginInfo.email,password:loginInfo.password})
             if(response?.data?.login && response?.data?.user?.role){
                 const user=response?.data?.user
-                login(user)
+                await login(user)
                 router.push('/admin-dashboard')
             }else{
                 router.push('/employee-dashboard')

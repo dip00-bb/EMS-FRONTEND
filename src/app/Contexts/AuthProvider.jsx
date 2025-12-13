@@ -1,22 +1,35 @@
 "use client"
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
+import axios from 'axios';
+import { axiosPrivate } from '../utils/axiosPrivate';
 
 
-const AuthProvider = ({children}) => {
+const AuthProvider = ({ children }) => {
 
-    const [user,setUser]=useState(null)
+    const [user, setUser] = useState(null)
 
-    const login=(user)=>{
+    const login = (user) => {
         setUser(user)
     }
 
-    const logout=()=>{
+    const logout = () => {
         setUser(null)
     }
 
+    useEffect(() => {
 
-    const authInfo={
+        const verifyUser = async () => {
+            const response = await axiosPrivate.post('/api/auth/verify')
+
+            console.log(response)
+        }
+
+        verifyUser()
+    }, []);
+
+
+    const authInfo = {
         user,
         login,
         logout
