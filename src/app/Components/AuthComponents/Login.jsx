@@ -1,10 +1,13 @@
 "use client"
+import useAuth from '@/app/Hooks/useAuth';
 import { axiosPublic } from '@/app/utils/axiosPublice';
 import Link from 'next/link';
 import {  useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const Login = () => {
+    const {login,user}=useAuth()
+    console.log(user)
     const router =useRouter()
     const [loginInfo, setLoginInfo] = useState({
         email: "",
@@ -24,7 +27,9 @@ const Login = () => {
         e.preventDefault()
         try {
             const response=await axiosPublic.post('/api/auth/login',{email:loginInfo.email,password:loginInfo.password})
-            if(response.data.login && response.data.role){
+            if(response?.data?.login && response?.data?.user?.role){
+                const user=response?.data?.user
+                login(user)
                 router.push('/admin-dashboard')
             }else{
                 router.push('/employee-dashboard')
