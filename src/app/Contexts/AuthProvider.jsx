@@ -12,6 +12,7 @@ const AuthProvider = ({ children }) => {
 
     const login = (user) => {
         setUser(user)
+        setIsLoading(false)
     }
 
     const logout = () => {
