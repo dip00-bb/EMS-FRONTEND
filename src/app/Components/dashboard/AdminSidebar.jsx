@@ -18,15 +18,15 @@ const AdminSidebar = () => {
             <div className='px-4'>
                 <div>
                     <Link href={'/admin-dashboard'}
-                        className={ ` ${pathName==='/admin-dashboard' ? "bg-red-500 rounded animate-pulse":"" } flex items-center gap-3 py-2.5 px-4`}
+                        className={ ` ${pathName==='/admin-dashboard' ? "bg-red-500 rounded":"" } flex items-center gap-3 py-2.5 px-4`}
                     >
                         <LayoutDashboard color='white' />
                         <span>Dashboard</span>
                     </Link>
                 </div>
                 <div>
-                    <Link href={'/'}
-                        className='flex items-center gap-3 py-2.5 px-4'
+                    <Link href={'/admin-dashboard/employee'}
+                        className={ ` ${pathName==='/admin-dashboard/employee' ? "bg-red-500 rounded":"" } flex items-center gap-3 py-2.5 px-4`}
                     >
                         <Users color='white' />
                         <span>Employee</span>
