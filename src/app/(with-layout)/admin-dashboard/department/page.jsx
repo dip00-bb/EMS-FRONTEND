@@ -1,12 +1,13 @@
-import AddDepartment from '@/app/Components/department/AddDepartment';
+
+import DepartmentList from '@/app/Components/department/DepartmentList';
 import React from 'react';
 
-const page = () => {
+const Department = () => {
     return (
         <div>
-            <AddDepartment/>
+            <div className='px-4 mt-6'><DepartmentList/></div>
         </div>
     );
 };
 
-export default page;
+export default Department;
