@@ -33,8 +33,8 @@ const AdminSidebar = () => {
                     </Link>
                 </div>
                 <div>
-                    <Link href={'/'}
-                        className='flex items-center gap-3 py-2.5 px-4'
+                    <Link href={'/admin-dashboard/department'}
+                        className={ ` ${pathName==='/admin-dashboard/department' ? "bg-red-500 rounded":"" } flex items-center gap-3 py-2.5 px-4`}
                     >
                         <Building color='white' />
                         <span>Department</span>
