@@ -3,12 +3,13 @@ import React, { useEffect, useState } from 'react';
 import { AuthContext } from './AuthContext';
 import axios from 'axios';
 import { axiosPrivate } from '../utils/axiosPrivate';
+import { useRouter } from 'next/navigation';
 
 
 const AuthProvider = ({ children }) => {
-
+    const router = useRouter()
     const [user, setUser] = useState(null)
-    const [isLoading,setIsLoading]=useState(true)
+    const [isLoading, setIsLoading] = useState(true)
 
     const login = (user) => {
         setUser(user)
@@ -22,13 +23,24 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
 
         const verifyUser = async () => {
-            const response = await axiosPrivate.post('/api/auth/verify')
-            setUser(response?.data?.user)
-            setIsLoading(false)
+            try {
+                const response = await axiosPrivate.post('/api/auth/verify')
+                console.log("dddd",response)
+                if (response?.data?.user) {
+                    setUser(response?.data?.user)
+                    setIsLoading(false)
+                } else {
+                    setIsLoading(false)
+                    router.push('/login')
+                }
+            } catch (error) {
+                setIsLoading(false)
+                router.push('/login')
+            }
         }
 
         verifyUser()
-    }, []);
+    }, [router]);
 
 
     const authInfo = {

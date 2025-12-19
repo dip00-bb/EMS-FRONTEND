@@ -12,7 +12,7 @@ const AdminDashboard = ({ children }) => {
         return <div>Loading...</div>
     }
 
-    if (user.role === "admin" && user) {
+    if ( user&& user.role === "admin") {
        return <div className='flex'>
             <AdminSidebar />
             <div className='flex-1'>

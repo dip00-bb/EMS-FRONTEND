@@ -1,6 +1,7 @@
 "use client"
 
-import axios from 'axios';
+import { axiosPrivate } from '@/app/utils/axiosPrivate';
+import { errorToast, sucessToast } from '@/utilitis/toastNotifaction';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
@@ -23,10 +24,12 @@ const AddDepartment = () => {
 
 
     const handleSubmit= async ()=>{
-        const response = await axios.post('/api/department/add',departmentInfo)
+        const response = await axiosPrivate.post('/api/department/add-depertment', {departmentName:departmentInfo.departmentName,depertmentDescription:departmentInfo.departmentDescription})
         if(response?.data?.success){
+            sucessToast(response?.data?.message)
             router.push('/admin-dashboard/department')
         }else{
+            errorToast(response?.data?.message)
             alert("something went wrong")
         }
     }
@@ -43,19 +46,20 @@ const AddDepartment = () => {
                     <input onChange={handleInfoChange} value={departmentInfo.departmentName} id='dep-title' type="text" name="departmentName"
 
                         className='border w-full outline-0 px-3 py-2 rounded'
+                        placeholder='Name of  Department'
                     />
                 </div>
 
                 <div className='w-full'>
                     <h6 className="dep-des mb-2 font-semibold">Description</h6>
                     <textarea onChange={handleInfoChange} value={departmentInfo.departmentDescription} id="dep-des" name='departmentDescription'
-                        className='w-full border outline-0 px-3 py-2 rounded' rows={4}></textarea>
+                        className='w-full border outline-0 px-3 py-2 rounded' placeholder='Description.....' rows={4}></textarea>
                 </div>
 
             </div>
 
             <footer className='w-full flex justify-center'>
-                <button onClick={handleSubmit} className='bg-(--primary-color) w-full py-3 rounded'>Add New Department</button>
+                <button onClick={handleSubmit} className='bg-(--primary-color) w-full py-3 rounded cursor-pointer'>Add New Department</button>
             </footer>
         </div>
 

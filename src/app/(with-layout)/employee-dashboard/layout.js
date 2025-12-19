@@ -10,7 +10,7 @@ const DashboardLayout = ({ children }) => {
         return <div>Loading...</div>
     }
 
-    if (user.role === "employee" && user) {
+    if (user && user.role === "employee") {
         return children
     }
 
