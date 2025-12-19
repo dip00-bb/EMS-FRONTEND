@@ -1,6 +1,7 @@
 import { Geist, Geist_Mono } from "next/font/google";
 import "./globals.css";
-import AuthContextWraper from "./ContextWraper/AuthContextWraper";
+import AuthContextWraper from "./Wraper/ContextWraper/AuthContextWraper";
+import TanstackWraper from "./Wraper/TanstackWraper/TanstackWraper";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,10 +24,11 @@ export default function RootLayout({ children }) {
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        <AuthContextWraper>
-          {children}
-        </AuthContextWraper>
-
+        <TanstackWraper>
+          <AuthContextWraper>
+            {children}
+          </AuthContextWraper>
+        </TanstackWraper>
       </body>
     </html>
   );
