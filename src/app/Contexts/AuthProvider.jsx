@@ -25,7 +25,6 @@ const AuthProvider = ({ children }) => {
         const verifyUser = async () => {
             try {
                 const response = await axiosPrivate.post('/api/auth/verify')
-                console.log("dddd",response)
                 if (response?.data?.user) {
                     setUser(response?.data?.user)
                     setIsLoading(false)

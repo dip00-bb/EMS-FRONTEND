@@ -1,5 +1,6 @@
 "use client"
 
+import Loader from '@/app/Components/Loader/Loader';
 import { axiosPrivate } from '@/app/utils/axiosPrivate';
 import { useQuery } from '@tanstack/react-query';
 import React from 'react';
@@ -10,18 +11,19 @@ const Employee = () => {
         queryKey: ["listOfDepartment"],
         queryFn: async () => {
             const response = await axiosPrivate.get('/api/department/get-department');
-
-            console.log(response)
             if (response?.data?.success) {
                 return response?.data?.departmentList
             }
-        }
+        },
+
     })
 
-    console.log(data)
+
+    if (isPending) <Loader />
+
     return (
         <div>
-            
+
         </div>
     );
 };
