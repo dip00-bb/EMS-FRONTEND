@@ -11,7 +11,7 @@ const AdminSidebar = () => {
     const pathName=usePathname()
 
     return (
-        <div className='w-64 h-screen top-0 bottom-0 left-0 space-y-2 bg-(--neurtal-color)'>
+        <div className='w-64 h-screen top-0 bottom-0 left-0 space-y-2 bg-(--neurtal-color) sticky'>
             <div className='bg-(--primary-color) py-3 text-center'>
                 <h3 className='text-2xl pacifico-regular text-white'>Employee MS</h3>
             </div>

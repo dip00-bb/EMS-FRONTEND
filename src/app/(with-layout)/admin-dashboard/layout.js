@@ -14,8 +14,10 @@ const AdminDashboard = ({ children }) => {
     }
 
     if (user && user.role === "admin") {
-        return <div className='flex'>
-            <AdminSidebar />
+        return <div className='flex w-full'>
+            <div>
+                <AdminSidebar />
+            </div>
             <div className='flex-1'>
                 <Navbar />
                 {children}
