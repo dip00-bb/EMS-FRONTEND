@@ -6,22 +6,32 @@ import TableFooter from '@/app/Components/Tables/TableFooter';
 import TableHead from '@/app/Components/Tables/TableHead';
 import { axiosPrivate } from '@/app/utils/axiosPrivate';
 import { useQuery } from '@tanstack/react-query';
-import React from 'react';
+import { CircleGauge } from 'lucide-react';
+import React, { useState } from 'react';
 
 const EmployeeList = () => {
 
+    const [totalData, setTotalData] = useState(0)
+    const [limit, setLimit] = useState(10);
+    const [cuurentPage, setCurrentPage] = useState(1);
+
+
     const { isPending, error, data } = useQuery({
-        queryKey: ["listOfDepartment"],
+        queryKey: ["listOfDepartment", limit, cuurentPage],
         queryFn: async () => {
-            const response = await axiosPrivate.get('/api/department/get-department');
+            const response = await axiosPrivate.get(`/api/department/get-department/?limit=${limit}&page=${cuurentPage}`);
             if (response?.data?.success) {
+                setTotalData(response?.data?.totalData)
                 return response?.data?.departmentList
             }
         },
 
     })
 
-    if (isPending) <Loader />
+
+    if (isPending) {
+        return <Loader />
+    }
 
     return (
         <div className='w-full'>
@@ -43,7 +53,7 @@ const EmployeeList = () => {
             {/* table footer */}
 
             <div className='px-3'>
-                <TableFooter />
+                <TableFooter setLimit={setLimit} totalData={totalData} limit={limit} setCurrentPage={setCurrentPage} cuurentPage={cuurentPage}/>
             </div>
         </div>
     );
