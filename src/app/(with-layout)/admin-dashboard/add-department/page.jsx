@@ -1,7 +1,7 @@
 "use client"
 
 import { axiosPrivate } from '@/app/utils/axiosPrivate';
-import { errorToast, sucessToast } from '@/utilitis/toastNotifaction';
+import { errorToast, sucessToast } from '@/lib/toastNotifaction';
 import { useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 

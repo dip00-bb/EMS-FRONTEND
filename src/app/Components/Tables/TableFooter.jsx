@@ -31,8 +31,6 @@ const TableFooter = ({ setLimit, totalData, limit, setCurrentPage, cuurentPage }
     }
 
     return (
-
-
         <div className='flex justify-between items-center py-2.5'>
             <div>
                 <select onChange={(e) => handleSetPageLimit(e)} className='cursor-pointer'>
