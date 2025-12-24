@@ -4,7 +4,7 @@ import React from 'react';
 const page = () => {
     return (
         <div>
-            <Department title={"Add New Department"}/>
+            <Department title={"Update Department"}/>
         </div>
     );
 };

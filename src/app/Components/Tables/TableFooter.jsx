@@ -1,30 +1,49 @@
+import { setCurrentPage, setLimit, toogleDisableButton } from '@/lib/feature/pagination/paginationSlice';
+import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { StepBack, StepForward } from 'lucide-react';
 import React from 'react';
 
-const TableFooter = ({ setLimit, totalData, limit, setCurrentPage, cuurentPage }) => {
+const TableFooter = () => {
+    const dispatch = useAppDispatch()
+
+    const totalData = useAppSelector(state => state.pagination.totalData);
+    const currentPage = useAppSelector(state => state.pagination.currentPage);
+
+    const limit = useAppSelector(state => state.pagination.limit);
+
+
+
+
+
 
     const handleSetPageLimit = (e) => {
-        setLimit(parseInt(e.target.value))
+        dispatch(setLimit(parseInt(e.target.value)))
     }
-    console.log("dd", cuurentPage)
+
+
+    const handleSetCurrentPage = (currentPage) => {
+        dispatch(setCurrentPage(currentPage))
+    }
+
+
     const totalPage = Math.ceil(totalData / limit);
     const arr = [...Array(totalPage).keys()];
 
 
     const handleNextAndPrevious = (buttonType) => {
         if (buttonType === "next") {
-            if (cuurentPage === arr.length) {
+            if (currentPage === arr.length) {
                 return
             }
-            setCurrentPage(cuurentPage + 1);
+            handleSetCurrentPage(currentPage + 1)
+
 
 
         } else if (buttonType === "prev") {
-            if (cuurentPage == 1) {
+            if (currentPage == 1) {
                 return
             }
-
-            setCurrentPage(cuurentPage - 1)
+            handleSetCurrentPage(currentPage - 1)
         } else {
             return
         }
@@ -40,17 +59,17 @@ const TableFooter = ({ setLimit, totalData, limit, setCurrentPage, cuurentPage }
                 </select>
             </div>
             <div className={`flex space-x-1 items-center`}>
-                <div onClick={() => handleNextAndPrevious("prev")} className='cursor-pointer items-center '>
+                <div onClick={() => handleNextAndPrevious("prev")} className={`cursor-pointer items-center`}>
                     <StepBack />
                 </div>
                 {
                     arr.map((el) => (
-                        <div onClick={() => setCurrentPage(el + 1)} key={el} className={`text-xl px-3 ${el+1==cuurentPage && 'bg-blue-400'} rounded cursor-pointer`}>
+                        <div onClick={() => handleSetCurrentPage(el + 1)} key={el} className={`text-xl px-3 ${el + 1 == currentPage && 'bg-blue-400'} rounded cursor-pointer`}>
                             {el + 1}
                         </div>
                     ))
                 }
-                <div onClick={() => handleNextAndPrevious("next")} className='cursor-pointer items-center'>
+                <div onClick={() => handleNextAndPrevious("next")} className={`cursor-pointer items-center`}>
                     <StepForward />
                 </div>
             </div>
