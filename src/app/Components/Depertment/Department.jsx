@@ -98,7 +98,7 @@ const Department = ({ title }) => {
             </div>
 
             <footer className='w-full flex justify-center'>
-                <button onClick={isEditPath ? handleUpdate : handleSubmit} className={`bg-(--primary-color) w-full py-3 rounded cursor-pointer ${isPending && 'Submitting..'}`}>{title}</button>
+                <button onClick={isEditPath ? handleUpdate : handleSubmit} className={`bg-(--primary-color) w-full py-3 rounded cursor-pointer`}>{title}</button>
             </footer>
         </div>
 
