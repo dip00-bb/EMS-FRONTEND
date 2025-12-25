@@ -3,14 +3,14 @@
 import { axiosPrivate } from '@/app/utils/axiosPrivate';
 import { errorToast, sucessToast } from '@/lib/toastNotifaction';
 import { useQuery } from '@tanstack/react-query';
-import { usePathname, useRouter } from 'next/navigation';
+import { useParams, usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
 const Department = ({ title }) => {
     const pathname = usePathname()
+    const {id} =useParams()
 
-    const isEditPath = pathname === "/admin-dashboard/update-department"
-    console.log(isEditPath)
+    const isEditPath = pathname === `/admin-dashboard/update-department/${id}`
 
 
     const router = useRouter()
@@ -25,10 +25,15 @@ const Department = ({ title }) => {
         queryKey: ["edit-department"],
 
         queryFn: async () => {
-            const response = await axiosPrivate.get(`/api/department/get-department/`);
-            console.log(response)
+            const response = await axiosPrivate.get(`/api/department/department-details/${id}`);
+            
             if (response?.data?.success) {
-                return response?.data?.departmentList
+                setDepInfo({
+                    departmentName:response.data.departmentDetails.departmentName,
+                    departmentDescription:response.data.departmentDetails.departmentDescription,
+                    
+                })
+                return response?.data?.departmentDetails
             }
 
         },
@@ -84,7 +89,7 @@ const Department = ({ title }) => {
             </div>
 
             <footer className='w-full flex justify-center'>
-                <button onClick={handleSubmit} className='bg-(--primary-color) w-full py-3 rounded cursor-pointer'>{title}</button>
+                <button onClick={handleSubmit} className={`bg-(--primary-color) w-full py-3 rounded cursor-pointer ${isPending && 'Submitting..'}`}>{title}</button>
             </footer>
         </div>
 
