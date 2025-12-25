@@ -8,7 +8,7 @@ import React, { useState } from 'react';
 
 const Department = ({ title }) => {
     const pathname = usePathname()
-    const {id} =useParams()
+    const { id } = useParams()
 
     const isEditPath = pathname === `/admin-dashboard/update-department/${id}`
 
@@ -26,12 +26,12 @@ const Department = ({ title }) => {
 
         queryFn: async () => {
             const response = await axiosPrivate.get(`/api/department/department-details/${id}`);
-            
+
             if (response?.data?.success) {
                 setDepInfo({
-                    departmentName:response.data.departmentDetails.departmentName,
-                    departmentDescription:response.data.departmentDetails.departmentDescription,
-                    
+                    departmentName: response.data.departmentDetails.departmentName,
+                    departmentDescription: response.data.departmentDetails.departmentDescription,
+
                 })
                 return response?.data?.departmentDetails
             }
@@ -53,6 +53,15 @@ const Department = ({ title }) => {
 
     const handleSubmit = async () => {
         const response = await axiosPrivate.post('/api/department/add-depertment', { departmentName: departmentInfo.departmentName, departmentDescription: departmentInfo.departmentDescription })
+        if (response?.data?.success) {
+            sucessToast(response?.data?.message)
+            router.push('/admin-dashboard/department')
+        } else {
+            errorToast(response?.data?.message)
+        }
+    }
+    const handleUpdate = async () => {
+        const response = await axiosPrivate.put(`/api/department/update-department-details/${id}`, { departmentName: departmentInfo.departmentName, departmentDescription: departmentInfo.departmentDescription })
         if (response?.data?.success) {
             sucessToast(response?.data?.message)
             router.push('/admin-dashboard/department')
@@ -89,7 +98,7 @@ const Department = ({ title }) => {
             </div>
 
             <footer className='w-full flex justify-center'>
-                <button onClick={handleSubmit} className={`bg-(--primary-color) w-full py-3 rounded cursor-pointer ${isPending && 'Submitting..'}`}>{title}</button>
+                <button onClick={isEditPath ? handleUpdate : handleSubmit} className={`bg-(--primary-color) w-full py-3 rounded cursor-pointer ${isPending && 'Submitting..'}`}>{title}</button>
             </footer>
         </div>
 
