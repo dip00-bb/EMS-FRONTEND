@@ -2,39 +2,57 @@
 
 import { axiosPrivate } from '@/app/utils/axiosPrivate';
 import { errorToast, sucessToast } from '@/lib/toastNotifaction';
+import { useQuery } from '@tanstack/react-query';
 import { usePathname, useRouter } from 'next/navigation';
 import React, { useState } from 'react';
 
-const Department = ({title}) => {
-    const pathname=usePathname()
-    console.log(pathname,"/admin-dashboard/update-department")
-    
-    const router=useRouter()
+const Department = ({ title }) => {
+    const pathname = usePathname()
 
-    const [departmentInfo,setDepInfo]=useState({
-        departmentName:"",
-        departmentDescription:""
+    const isEditPath = pathname === "/admin-dashboard/update-department"
+    console.log(isEditPath)
+
+
+    const router = useRouter()
+
+    const [departmentInfo, setDepInfo] = useState({
+        departmentName: "",
+        departmentDescription: ""
     })
-    
 
 
-    const handleInfoChange=(event)=>{
-        const {name,value}=event.target
-        setDepInfo((prev)=>({
+    const { isPending, data } = useQuery({
+        queryKey: ["edit-department"],
+
+        queryFn: async () => {
+            const response = await axiosPrivate.get(`/api/department/get-department/`);
+            console.log(response)
+            if (response?.data?.success) {
+                return response?.data?.departmentList
+            }
+
+        },
+        enabled: !!isEditPath
+
+    })
+
+
+    const handleInfoChange = (event) => {
+        const { name, value } = event.target
+        setDepInfo((prev) => ({
             ...prev,
-            [name]:value
+            [name]: value
         }))
     }
 
 
-    const handleSubmit= async ()=>{
-        const response = await axiosPrivate.post('/api/department/add-depertment', {departmentName:departmentInfo.departmentName,depertmentDescription:departmentInfo.departmentDescription})
-        if(response?.data?.success){
+    const handleSubmit = async () => {
+        const response = await axiosPrivate.post('/api/department/add-depertment', { departmentName: departmentInfo.departmentName, departmentDescription: departmentInfo.departmentDescription })
+        if (response?.data?.success) {
             sucessToast(response?.data?.message)
             router.push('/admin-dashboard/department')
-        }else{
+        } else {
             errorToast(response?.data?.message)
-            alert("something went wrong")
         }
     }
 

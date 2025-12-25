@@ -1,7 +1,12 @@
+import Link from 'next/link';
 import React from 'react';
 
-const TableBody = ({ depName,depDes,id }) => {
+const TableBody = ({ depName, depDes, id }) => {
 
+
+    const handleNavigate=()=>{
+
+    }
 
     return (
 
@@ -14,8 +19,8 @@ const TableBody = ({ depName,depDes,id }) => {
             </div>
 
             <div className='px-3 py-2.5 w-full flex justify-center items-center space-x-3'>
-                <span className='bg-(--primary-color)  px-2 py-1.5 rounded cursor-pointer' >EDIT</span>
-                <span className='bg-red-500  px-2 py-1.5 rounded cursor-pointer' >EDIT</span>
+                <Link href={`update-department/${id}`} className='bg-(--primary-color)  px-2 py-1.5 rounded cursor-pointer' >EDIT</Link>
+                <span className='bg-red-500  px-2 py-1.5 rounded cursor-pointer' >DELETE</span>
             </div>
 
         </div>
