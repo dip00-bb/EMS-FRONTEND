@@ -1,7 +1,7 @@
 import Link from 'next/link';
 import React from 'react';
 
-const DepartmentList = () => {
+const DepartmentHeader = () => {
     return (
         <div>
             <div className='text-center'>
@@ -20,4 +20,4 @@ const DepartmentList = () => {
     );
 };
 
-export default DepartmentList;
+export default DepartmentHeader;

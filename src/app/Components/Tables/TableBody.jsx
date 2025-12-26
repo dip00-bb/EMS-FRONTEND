@@ -13,9 +13,7 @@ const TableBody = ({ depName, depDes, id }) => {
             return axiosPrivate.delete(`api/department/delete-department/${depId}`)
         },
         onSuccess: (data, id) => {
-            console.log(data)
-            console.log(id)
-            queryClient.setQueriesData(['edit-department'], (chechedElement) => {
+            queryClient.setQueriesData(['listOfDepartment'], (chechedElement) => {
                 console.log(chechedElement)
                 return chechedElement?.filter((dep) => dep._id !== id)
             })
@@ -30,7 +28,7 @@ const TableBody = ({ depName, depDes, id }) => {
 
     return (
 
-        <div className='grid grid-cols-3 border-b'>
+        <div className='grid grid-cols-3 border'>
             <div className='px-3 py-2.5 w-full flex justify-center'>
                 <p>{depName}</p>
             </div>
