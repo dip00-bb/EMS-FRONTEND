@@ -6,10 +6,11 @@ import TableBody from '@/app/Components/Tables/TableBody';
 import TableFooter from '@/app/Components/Tables/TableFooter';
 import TableHead from '@/app/Components/Tables/TableHead';
 import { axiosPrivate } from '@/app/utils/axiosPrivate';
+import { fetchAsyncDepartments } from '@/lib/feature/deparments/departmentSlice';
 import { setTotalData } from '@/lib/feature/pagination/paginationSlice';
 import { useAppDispatch, useAppSelector } from '@/lib/hooks';
 import { useQuery } from '@tanstack/react-query';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 const DepartmentList = () => {
 
@@ -17,18 +18,11 @@ const DepartmentList = () => {
     const currentPage = useAppSelector(state => state.pagination.currentPage);
     const limit = useAppSelector(state => state.pagination.limit)
 
+    useEffect(() => {
+        dispatch(fetchAsyncDepartments(limit, currentPage))
+    }, [dispatch, limit, currentPage])
 
-    const { isPending, data } = useQuery({
-        queryKey: ["listOfDepartment", limit, currentPage],
-        queryFn: async () => {
-            const response = await axiosPrivate.get(`/api/department/get-department/?limit=${limit}&page=${currentPage}`);
-            if (response?.data?.success) {
-                dispatch(setTotalData(response?.data?.totalData))
-                return response?.data?.departmentList
-            }
-        },
-
-    })
+    const {isPending,departments,isError,error}=useAppSelector((state)=>state.department)
 
 
     if (isPending) {
@@ -49,7 +43,7 @@ const DepartmentList = () => {
 
             <div>
                 {
-                    data && data.map((dep) => (
+                    departments && departments.map((dep) => (
                         <TableBody key={dep._id} depName={dep.departmentName} depDes={dep.departmentDescription} id={dep._id} />
                     ))
                 }

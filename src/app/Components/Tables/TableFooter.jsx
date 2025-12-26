@@ -7,6 +7,7 @@ const TableFooter = () => {
     const dispatch = useAppDispatch()
 
     const totalData = useAppSelector(state => state.pagination.totalData);
+
     const currentPage = useAppSelector(state => state.pagination.currentPage);
 
     const limit = useAppSelector(state => state.pagination.limit);
